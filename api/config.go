@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// DefaultConfig ...
+// DefaultConfig returns the default api config.
 func DefaultConfig() Config {
 	return Config{
 		Port:   8080,

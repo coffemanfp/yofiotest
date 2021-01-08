@@ -8,6 +8,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
+// currentConnection keeps the current database connection.
 var currentConnection *PostgreSQL
 
 // New returns a new database connection and overwrittes the last connection.

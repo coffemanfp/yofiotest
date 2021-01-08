@@ -51,6 +51,7 @@ func (adb AssignersDB) Create(a assigners.Assigner) (newA assigners.Assigner, er
 	return
 }
 
+// nullStats is a helper struct to get the stats values.
 type nullStats struct {
 	totalAsgmtsDone             *sql.NullInt64
 	totalAsgmtsSuccess          *sql.NullInt64
@@ -59,6 +60,7 @@ type nullStats struct {
 	averageInvestmentFail       *sql.NullFloat64
 }
 
+// getValues sets the non-empty fields into s.
 func (n nullStats) getValues(s *assigners.Stats) {
 	if n.totalAsgmtsDone != nil {
 		s.TotalAsgmtsDone = int(n.totalAsgmtsDone.Int64)

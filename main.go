@@ -27,6 +27,8 @@ func init() {
 	c := postgresql.DefaultConfig()
 
 	// Environment
+	// Use the non-empty environment vars.
+
 	portEnv := os.Getenv("PORT")
 	if portEnv == "" {
 		port = 8080

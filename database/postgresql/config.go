@@ -6,7 +6,7 @@ import (
 	"github.com/lib/pq"
 )
 
-// DefaultConfig ...
+// DefaultConfig returns the default database config.
 func DefaultConfig() Config {
 	return Config{
 		Name:     "yofiotest",
@@ -18,7 +18,7 @@ func DefaultConfig() Config {
 	}
 }
 
-// Config ...
+// Config represents the settings.
 type Config struct {
 	Name     string
 	User     string
@@ -29,7 +29,8 @@ type Config struct {
 	URL      string
 }
 
-// GetURL ...
+// GetURL gets the url from the c.URL field or generates the url
+// from the other config fields.
 func (c Config) GetURL() (url string, err error) {
 	if c.URL != "" {
 		url, err = pq.ParseURL(c.URL)

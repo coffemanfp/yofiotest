@@ -23,6 +23,7 @@ func main() {
 	pg := postgresql.Get()
 	db := pg.GetConn()
 
+	// Get and execute the schema
 	schemaBytes, err := getFilebytes(schemaFile)
 	if err != nil {
 		log.Fatalln("failed to read the schema file: ", err)
@@ -39,6 +40,7 @@ func main() {
 		return
 	}
 
+	// Get and execute the examples.
 	examplesBytes, err := getFilebytes(examplesFile)
 	if err != nil {
 		log.Fatalln("failed to read the examples file: ", err)

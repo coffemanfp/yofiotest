@@ -2,7 +2,7 @@ package assigners
 
 import "errors"
 
-// CreditAssigner ...
+// CreditAssigner calculates possible assignments based on the investment.
 type CreditAssigner interface {
 	Assign(investment int32) (int32, int32, int32, error)
 }
