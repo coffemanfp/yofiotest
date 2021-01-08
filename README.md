@@ -138,7 +138,7 @@ Creates an assignment based on the investment provided. The assignment is saved 
 **Body**
 
 ```json
-// For a successed assignment
+// For a successed assignment - 200 Status Code
 {
     "id": 1,
     "investment": 3000,
@@ -148,7 +148,7 @@ Creates an assignment based on the investment provided. The assignment is saved 
     "credit_type_700": 2
 }
 
-// For a failed assigment
+// For a failed assigment - 400 Status Code
 {
     "id": 1,
     "investment": 3000,
@@ -158,7 +158,7 @@ Creates an assignment based on the investment provided. The assignment is saved 
     "credit_type_700": 0
 }
 
-// For error a internal server error.
+// For error a internal server error - 500 Status Code
 {
     "error": "Oops!"
 }
@@ -181,7 +181,7 @@ Gets the statistics of the assignments.
 **Body**
 
 ```json
-// For a great response
+// For a great response - 200 Status Code
 {
     "total_asignments_done": 1,
     "total_asignments_success": 1,
@@ -190,7 +190,7 @@ Gets the statistics of the assignments.
     "average_investment_fail": 0
 }
 
-// For internal server error
+// For internal server error - 500 Status Code
 {
     "error": "Oops!"
 }

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -17,35 +18,57 @@ import (
 
 func TestCreateAssignment(t *testing.T) {
 	var fakeDB fakeAssignersDB
-	var investment int32 = 3000
-	var expectedAssigner assigners.Assigner
-
-	expectedAssigner.Assign(investment)
 
 	r := gin.Default()
 	r.POST("/", handlers.CreateAssignment(fakeDB))
 
-	rBody, _ := json.Marshal(gin.H{
-		"investment": investment,
-	})
+	tests := []struct {
+		name       string
+		investment int32
+		code       int
+	}{
+		{
+			name:       "success assignment",
+			investment: 3000,
+			code:       http.StatusOK,
+		},
+		{
+			name:       "fail assignment",
+			investment: 400,
+			code:       http.StatusBadRequest,
+		},
+	}
 
-	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("POST", "/", bytes.NewReader(rBody))
-	req.Header.Set("Content-Type", "application/json")
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			w := httptest.NewRecorder()
+			var expectedAssigner assigners.Assigner
 
-	r.ServeHTTP(w, req)
+			expectedAssigner.Assign(tt.investment)
+			rBody, _ := json.Marshal(gin.H{
+				"investment": tt.investment,
+			})
+			req, _ := http.NewRequest("POST", "/", bytes.NewReader(rBody))
+			req.Header.Set("Content-Type", "application/json")
 
-	assert.Equal(t, http.StatusCreated, w.Code)
+			r.ServeHTTP(w, req)
 
-	var newA assigners.Assigner
-	err := json.Unmarshal(w.Body.Bytes(), &newA)
-	assert.Nil(t, err)
+			assert.Equal(t, tt.code, w.Code)
 
-	assert.Equal(t, investment, newA.Investment)
-	assert.Equal(t, expectedAssigner.Success, newA.Success)
-	assert.Equal(t, expectedAssigner.CreditType300, newA.CreditType300)
-	assert.Equal(t, expectedAssigner.CreditType500, newA.CreditType500)
-	assert.Equal(t, expectedAssigner.CreditType700, newA.CreditType700)
+			var newA assigners.Assigner
+
+			fmt.Println(w.Body.String())
+			err := json.Unmarshal(w.Body.Bytes(), &newA)
+			assert.Nil(t, err)
+
+			assert.Equal(t, tt.investment, newA.Investment)
+			assert.Equal(t, expectedAssigner.Success, newA.Success)
+			assert.Equal(t, expectedAssigner.CreditType300, newA.CreditType300)
+			assert.Equal(t, expectedAssigner.CreditType500, newA.CreditType500)
+			assert.Equal(t, expectedAssigner.CreditType700, newA.CreditType700)
+
+		})
+	}
 }
 
 func TestFailCreateAssignment(t *testing.T) {

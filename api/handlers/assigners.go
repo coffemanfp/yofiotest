@@ -37,7 +37,11 @@ func CreateAssignment(db database.AssignersDB) gin.HandlerFunc {
 			CreditType700: assigner.CreditType700,
 		}
 
-		c.JSON(http.StatusCreated, newAssigner)
+		if newAssigner.Success {
+			c.JSON(http.StatusOK, newAssigner)
+		} else {
+			c.JSON(http.StatusBadRequest, newAssigner)
+		}
 	}
 }
 
