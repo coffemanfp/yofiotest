@@ -17,13 +17,7 @@ func (api API) initRoutes() {
 		return
 	})
 
-	e.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, map[string]string{
-			"message": "Oh yeah!",
-		})
-	})
-
 	assignersService := api.DBServices.Assigners
 	e.POST("/create-assignment", handlers.CreateAssignment(assignersService))
-	e.GET("/statistics", handlers.GetStats(assignersService))
+	e.POST("/statistics", handlers.GetStats(assignersService))
 }

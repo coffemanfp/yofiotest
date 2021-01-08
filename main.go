@@ -27,6 +27,17 @@ func init() {
 	c := postgresql.DefaultConfig()
 
 	// Environment
+	portEnv := os.Getenv("PORT")
+	if portEnv == "" {
+		port = 8080
+	} else {
+		var err error
+		port, err = strconv.Atoi(portEnv)
+		if err != nil {
+			log.Fatalln("fatal: invalid or not provided: port.\n%s\n", err)
+		}
+	}
+
 	if dbName := os.Getenv("DB_NAME"); dbName != "" {
 		c.Name = dbName
 	}
@@ -43,7 +54,7 @@ func init() {
 		var err error
 		c.Port, err = strconv.Atoi(dbPort)
 		if err != nil {
-			log.Fatalf("fatal: invalid or not provided: port.\n%s\n", err)
+			log.Fatalf("fatal: invalid or not provided: db_port.\n%s\n", err)
 		}
 	}
 	if dbSslMode := os.Getenv("DB_SSLMODE"); dbSslMode != "" {
