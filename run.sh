@@ -1,3 +1,3 @@
 #!/bin/bash
 
-go build -o bin/boringec && ./bin/boringec
+go build -o bin/yofiotest && ./bin/yofiotest
