@@ -27,9 +27,26 @@ git clone https://github.com/coffemanfp/yofiotest.git
 - **DB_URL**: Database URL. When used, it overrides all previous values.
 
 
-
 ## Migrations
 To run migrations you need to have an accessible database and the appropriate settings.
+
+To setup a user and database, use the following commands:
+
+**Create a user**
+```sh
+    sudo -u postgres psql -p <PORT> -c "CREATE USER <USER> WITH PASSWORD '<PASSWORD>';"
+
+    # Example
+    sudo -u postgres psql -p 5432 -c "CREATE USER yofiotest WITH PASSWORD 'yofiotest';"
+```
+
+**Create a database**
+```sh
+    sudo -u postgres psql -p <PORT> -c "CREATE DATABASE <NAME> WITH OWNER <USER>;"
+
+    # Example
+    sudo -u postgres psql -p 5432 -c "CREATE DATABASE yofiotest WITH OWNER yofiotest;"
+```
 
 By default the following script executes the migrations and data examples on them.
 
