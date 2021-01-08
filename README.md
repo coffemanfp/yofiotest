@@ -13,17 +13,19 @@ git clone https://github.com/coffemanfp/yofiotest.git
 ## Environment
 
 ### Server
-**PORT**: Port server.                   (default: **8080**).
+- **PORT**: Port server.                   (default: **8080**).
 
 
 ### PostgreSQL 
-**DB_NAME**: Database name.         (default: **yofiotest**).
-**DB_USER**: Database user.        (default: **yofiotest**).
-**DB_PASSWORD**: Database password. (default: **yofiotest**).
-**DB_HOST**: Database host.           (default: **localhost**).
-**DB_PORT**: Database port.         (default: **5432**).
-**DB_SSLMODE**: Database SSL mode.     (default: **disable**).
-**DB_URL**: Database URL. When used, it overrides all previous values.
+
+- **DB_NAME**: Database name.         (default: **yofiotest**).
+- **DB_USER**: Database user.        (default: **yofiotest**).
+- **DB_PASSWORD**: Database password. (default: **yofiotest**).
+- **DB_HOST**: Database host.           (default: **localhost**).
+- **DB_PORT**: Database port.         (default: **5432**).
+- **DB_SSLMODE**: Database SSL mode.     (default: **disable**).
+- **DB_URL**: Database URL. When used, it overrides all previous values.
+
 
 
 ## Migrations
