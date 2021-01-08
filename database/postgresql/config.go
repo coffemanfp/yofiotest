@@ -41,12 +41,12 @@ func (c Config) GetURL() (url string, err error) {
 	}
 
 	url = fmt.Sprintf(
-		"user=%s password=%s dbname=%s host=%s port=%d sslmode=%s",
-		c.User,
-		c.Password,
+		"dbname=%s host=%s password=%s port=%d user=%s sslmode=%s",
 		c.Name,
 		c.Host,
+		c.Password,
 		c.Port,
+		c.User,
 		c.SslMode,
 	)
 	return

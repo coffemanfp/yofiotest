@@ -10,8 +10,13 @@ type Database interface {
 }
 
 // Init inits the database handler provided.
-func Init(db Database) error {
-	return db.Init()
+func Init(db Database) (err error) {
+	err = db.Init()
+	if err != nil {
+		return
+	}
+	currentDatabase = db
+	return
 }
 
 // Get gets the current database connection.

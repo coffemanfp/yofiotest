@@ -34,7 +34,7 @@ func init() {
 		var err error
 		port, err = strconv.Atoi(portEnv)
 		if err != nil {
-			log.Fatalln("fatal: invalid or not provided: port.\n%s\n", err)
+			log.Fatalf("fatal: invalid or not provided: port.\n%s\n", err)
 		}
 	}
 

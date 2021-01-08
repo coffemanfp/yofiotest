@@ -1,23 +1,26 @@
 package api
 
 import (
-	"net/http"
+	"errors"
 
 	"github.com/coffemanfp/yofiotest/api/handlers"
 	"github.com/gin-gonic/gin"
 )
 
-func (api API) initRoutes() {
-	e := api.Config.Engine
-
-	e.NoRoute(func(c *gin.Context) {
-		c.JSON(http.StatusNotFound, map[string]string{
-			"error": "not found",
-		})
+func initRoutes(e *gin.Engine, dbS *DBServices) (err error) {
+	if dbS == nil {
+		err = errors.New("fatal: non-existent database services")
 		return
-	})
+	}
+	if e == nil {
+		err = errors.New("fatal: non-existent engine")
+		return
+	}
 
-	assignersService := api.DBServices.Assigners
+	e.NoRoute(handlers.NoRoute)
+
+	assignersService := dbS.Assigners
 	e.POST("/create-assignment", handlers.CreateAssignment(assignersService))
 	e.POST("/statistics", handlers.GetStats(assignersService))
+	return
 }

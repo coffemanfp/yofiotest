@@ -13,13 +13,15 @@ type DBServices struct {
 }
 
 // initDBServices starts the database services used by handlers.
-func (api *API) initDBServices() (err error) {
-	p := postgresql.Get()
-	if p == nil {
+func initDBServices(dbS *DBServices) (err error) {
+	db := database.Get()
+	if db == nil {
 		err = errors.New("fatal: non-existent database connection")
 		return
 	}
 
-	api.DBServices.Assigners = postgresql.NewAssignersDB(p)
+	p := db.(*postgresql.PostgreSQL)
+
+	dbS.Assigners = postgresql.NewAssignersDB(p)
 	return
 }

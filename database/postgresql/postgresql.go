@@ -10,7 +10,7 @@ import (
 
 var currentConnection *PostgreSQL
 
-// New ...
+// New returns a new database connection and overwrittes the last connection.
 func New(c Config) (newP *PostgreSQL) {
 	newP = &PostgreSQL{
 		Config: c,
@@ -25,19 +25,19 @@ func Get() *PostgreSQL {
 	return currentConnection
 }
 
-// PostgreSQL ...
+// PostgreSQL database implementation for PostgreSQL.
 type PostgreSQL struct {
 	Config Config
 
 	db *sql.DB
 }
 
-// GetConn ...
+// GetConn gets the *sql.DB connection.
 func (p PostgreSQL) GetConn() *sql.DB {
 	return p.db
 }
 
-// Init ...
+// Init starts the database connection.
 func (p *PostgreSQL) Init() (err error) {
 	if p.db != nil {
 		err = p.Ping()
@@ -64,7 +64,7 @@ func (p *PostgreSQL) Init() (err error) {
 	return
 }
 
-// Ping ...
+// Ping sends a check ping to the database.
 func (p PostgreSQL) Ping() (err error) {
 	err = p.db.Ping()
 	if err != nil {
@@ -73,7 +73,7 @@ func (p PostgreSQL) Ping() (err error) {
 	return
 }
 
-// Close ...
+// Close closes the database.
 func (p PostgreSQL) Close() error {
 	return p.db.Close()
 }

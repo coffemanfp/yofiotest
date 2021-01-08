@@ -16,7 +16,7 @@ func CreateAssignment(db database.AssignersDB) gin.HandlerFunc {
 
 		err := c.Bind(&assigner)
 		if err != nil || assigner.Investment == 0 {
-			c.AbortWithStatusJSON(http.StatusBadRequest, "invalid body")
+			c.AbortWithStatusJSON(http.StatusBadRequest, newErrorMessage("invalid body"))
 			return
 		}
 
@@ -25,7 +25,7 @@ func CreateAssignment(db database.AssignersDB) gin.HandlerFunc {
 		newAssigner, err := db.Create(assigner)
 		if err != nil {
 			log.Println(err)
-			c.AbortWithStatusJSON(http.StatusInternalServerError, "Oops!")
+			c.AbortWithStatusJSON(http.StatusInternalServerError, newErrorMessage("Oops!"))
 			return
 		}
 		newAssigner = assigners.Assigner{
@@ -46,7 +46,7 @@ func GetStats(db database.AssignersDB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		stats, err := db.GetStats()
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusInternalServerError, "Oops!")
+			c.AbortWithStatusJSON(http.StatusInternalServerError, newErrorMessage("Oops!"))
 			return
 		}
 

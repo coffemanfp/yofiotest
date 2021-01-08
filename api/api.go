@@ -1,6 +1,7 @@
 package api
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -19,11 +20,16 @@ type API struct {
 
 // Run runs the api listener.
 func (api API) Run() (err error) {
-	err = api.initDBServices()
+	err = initDBServices(&api.DBServices)
 	if err != nil {
 		return
 	}
-	api.initRoutes()
+	initRoutes(api.Config.Engine, &api.DBServices)
+
+	if api.Config.Port == 0 {
+		err = errors.New("fatal: invalid or not provided: port")
+		return
+	}
 
 	err = api.Config.Engine.Run(fmt.Sprintf(":%d", api.Config.Port))
 	return
